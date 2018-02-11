@@ -115,7 +115,13 @@ public:
 
   void PredictRadarMeasurement(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
 
-  void UpdateRadarState(VectorXd S, MatrixXd z_pred, MatrixXd z, MatrixXd Zsig);
+  void UpdateRadarState(MatrixXd S, MatrixXd z_pred, VectorXd z, MatrixXd Zsig);
+
+  void PredictLidarMeasurement(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+
+  void UpdateLidarState(MatrixXd S, MatrixXd z_pred, VectorXd z, MatrixXd Zsig);
+  
+  double fixThetaRange(double theta);
 };
 
 #endif /* UKF_H */

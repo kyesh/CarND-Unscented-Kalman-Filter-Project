@@ -42,6 +42,7 @@ int main()
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
+    std::cout << "Start On Message" << std::endl;
 
     if (length && length > 2 && data[0] == '4' && data[1] == '2')
     {
@@ -106,8 +107,9 @@ int main()
     	  ground_truth.push_back(gt_values);
           
           //Call ProcessMeasurment(meas_package) for Kalman filter
+          std::cout << "Before Process Measurement" << std::endl;
     	  ukf.ProcessMeasurement(meas_package);    	  
-
+          std::cout << "After Process Measurement" << std::endl;
     	  //Push the current estimated x,y positon from the Kalman filter's state vector
 
     	  VectorXd estimate(4);
@@ -127,6 +129,7 @@ int main()
     	  
     	  estimations.push_back(estimate);
 
+          std::cout << "Before RMSE" << std::endl;
     	  VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
 
           json msgJson;
@@ -146,6 +149,7 @@ int main()
         std::string msg = "42[\"manual\",{}]";
         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
       }
+      std::cout << "End On Message" << std::endl;
     }
 
   });
