@@ -67,6 +67,10 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  MatrixXd Xsig_aug;
+
+  MatrixXd Xsig_pred;
+
 
   /**
    * Constructor
@@ -103,11 +107,15 @@ public:
    */
   void UpdateRadar(MeasurementPackage meas_package);
 
-  void AugmentedSigmaPoints(MatrixXd* Xsig_out);
+  void AugmentedSigmaPoints();
 
-  void SigmaPointPrediction(MatrixXd* Xsig_out, MatrixXd Xsig_aug, double delta_t);
+  void SigmaPointPrediction(double delta_t);
 
-  void PredictMeanAndCovariance(MatrixXd Xsig_pred);
+  void PredictMeanAndCovariance();
+
+  void PredictRadarMeasurement(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+
+  void UpdateRadarState(VectorXd S, MatrixXd z_pred, MatrixXd z, MatrixXd Zsig);
 };
 
 #endif /* UKF_H */
